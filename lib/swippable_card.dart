@@ -61,34 +61,44 @@ class SwippableCard extends StatelessWidget {
               right: 10,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  Text(
+                    card.age,
+                    style: const TextStyle(
+                      fontSize: 26,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        width: 300,
+                      Flexible(
                         child: Text(
-                          '${card.firstName} ${card.lastName}',
+                          card.firstName,
                           style: const TextStyle(
-                            fontSize: 40,
+                            fontSize: 34,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        card.age,
-                        style: const TextStyle(
-                          fontSize: 26,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                      const SizedBox(width: 10,),
+                      Expanded(
+                        child: Text(
+                          card.lastName,
+                          style: const TextStyle(
+                            fontSize: 34,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w100,
+                          ),
                         ),
                       ),
                     ],
                   ),
                   Text(
                     card.intro,
+                    maxLines: 3,
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.white,
@@ -103,16 +113,15 @@ class SwippableCard extends StatelessWidget {
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16,
-                          vertical: 8,
                         ),
                       ),
                       onPressed: () {
                         if (onTap != null) onTap!();
                       },
                       child: const Text(
-                        "Reject",
+                        "Not fit for me",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 10,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
