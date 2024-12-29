@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:klickrasgn/card_model.dart';
-import 'package:klickrasgn/guide_model.dart';
-import 'package:klickrasgn/home_provider.dart';
-import 'package:klickrasgn/swippable_card.dart';
-import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
+import 'package:klickrasgn/data/card_model.dart';
+import 'package:klickrasgn/core/app_asset_constants.dart';
+import 'package:klickrasgn/core/app_string_constants.dart';
+import 'package:klickrasgn/data/guide_model.dart';
+import 'package:klickrasgn/presentation/guide_card_item.dart';
+import 'package:klickrasgn/presentation/swippable_card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,19 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Klickr Asgn',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-          fontFamily: 'GeneralSans'),
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => HomeProvider(),
-          ),
-        ],
-        child: const MyHomePage(title: 'Flutter Demo Home Page'),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        fontFamily: 'GeneralSans',
       ),
+      home: const MyHomePage(title: 'Klickr Assignment'),
     );
   }
 }
@@ -44,12 +38,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeProvider>(
-      builder: (context, homeNotifier, child) {
-        return const Scaffold(
-          body: SwipeCardExample(),
-        );
-      },
+    return const Scaffold(
+      body: SwipeCardExample(),
     );
   }
 }
@@ -58,45 +48,91 @@ class SwipeCardExample extends StatefulWidget {
   const SwipeCardExample({super.key});
 
   @override
-  _SwipeCardExampleState createState() => _SwipeCardExampleState();
+  State<SwipeCardExample> createState() => _SwipeCardExampleState();
 }
 
 class _SwipeCardExampleState extends State<SwipeCardExample> {
-  final List<GuideModel> guideCard = [
-    const GuideModel("assets/lottie/swiperight.json",
-        "Swipe right to match with a person :)"),
-    const GuideModel("assets/lottie/swipeleft.json", "Swipe left to pass -_-"),
-    const GuideModel("assets/lottie/swipeup.json",
-        "Swipe up or down to let us know you don't like the recommendation :\\"),
-  ];
-  List<CardModel> cards = [
-    const CardModel("John", "Doe", "25", "Loves hiking and outdoor adventures.",
-        "assets/img1.jpg"),
-    const CardModel("Jane", "Smith", "28", "Passionate about photography.",
-        "assets/img8.jpg"),
-    const CardModel(
-        "Emily",
-        "Johnson",
-        "22",
-        "Aspiring chef who loves to experimentAspiring chef who loves to experimentAspiring chef who loves to experimentAspiring chef who loves to experimentAspiring chef who loves to experimentAspiring chef who loves to experimentAspiring chef who loves to experimentAspiring chef who loves to experiment.",
-        "assets/img2.jpg"),
-    const CardModel("Michael", "Brown", "30",
-        "Tech enthusiast and software developer.", "assets/img3.jpg"),
-    const CardModel("Sarah", "Davis", "27",
-        "Yoga practitioner and fitness coach.", "assets/img4.jpg"),
-    const CardModel("David", "Wilson", "24",
-        "Freelance artist and mural designer.", "assets/img5.jpg"),
-    const CardModel("Sophia", "Martinez", "29", "Bookworm and coffee lover.",
-        "assets/img7.jpg"),
-    const CardModel("James", "Garcia", "26", "Traveler exploring new cultures.",
-        "assets/img6.jpg"),
-    const CardModel("Olivia", "Clark", "23",
-        "Animal rights activist and blogger.", "assets/img3.jpg"),
-    const CardModel("William", "Lopez", "31",
-        "Music producer with a love for jazz.", "assets/img1.jpg"),
+  List<GuideModel> guides = [
+    const GuideModel(AppAssetConstants.swipeRightLottie,
+        AppStringConstants.swipeRightMessage),
+    const GuideModel(
+        AppAssetConstants.swipeLeftLottie, AppStringConstants.swipeLeftMessage),
+    const GuideModel(
+        AppAssetConstants.swipeUpLottie, AppStringConstants.swipeUpMessage),
   ];
 
-  int currentIndex = 0;
+  List<CardModel> cards = [
+    const CardModel(
+      AppStringConstants.johnFirstName,
+      AppStringConstants.johnLastName,
+      AppStringConstants.johnAge,
+      AppStringConstants.johnBio,
+      AppAssetConstants.img1,
+    ),
+    const CardModel(
+      AppStringConstants.janeFirstName,
+      AppStringConstants.janeLastName,
+      AppStringConstants.janeAge,
+      AppStringConstants.janeBio,
+      AppAssetConstants.img8,
+    ),
+    const CardModel(
+      AppStringConstants.emilyFirstName,
+      AppStringConstants.emilyLastName,
+      AppStringConstants.emilyAge,
+      AppStringConstants.emilyBio,
+      AppAssetConstants.img7,
+    ),
+    const CardModel(
+      AppStringConstants.michaelFirstName,
+      AppStringConstants.michaelLastName,
+      AppStringConstants.michaelAge,
+      AppStringConstants.michaelBio,
+      AppAssetConstants.img3,
+    ),
+    const CardModel(
+      AppStringConstants.sarahFirstName,
+      AppStringConstants.sarahLastName,
+      AppStringConstants.sarahAge,
+      AppStringConstants.sarahBio,
+      AppAssetConstants.img4,
+    ),
+    const CardModel(
+      AppStringConstants.davidFirstName,
+      AppStringConstants.davidLastName,
+      AppStringConstants.davidAge,
+      AppStringConstants.davidBio,
+      AppAssetConstants.img5,
+    ),
+    const CardModel(
+      AppStringConstants.sophiaFirstName,
+      AppStringConstants.sophiaLastName,
+      AppStringConstants.sophiaAge,
+      AppStringConstants.sophiaBio,
+      AppAssetConstants.img7,
+    ),
+    const CardModel(
+      AppStringConstants.jamesFirstName,
+      AppStringConstants.jamesLastName,
+      AppStringConstants.jamesAge,
+      AppStringConstants.jamesBio,
+      AppAssetConstants.img6,
+    ),
+    const CardModel(
+      AppStringConstants.oliviaFirstName,
+      AppStringConstants.oliviaLastName,
+      AppStringConstants.oliviaAge,
+      AppStringConstants.oliviaBio,
+      AppAssetConstants.img3,
+    ),
+    const CardModel(
+      AppStringConstants.williamFirstName,
+      AppStringConstants.williamLastName,
+      AppStringConstants.williamAge,
+      AppStringConstants.williamBio,
+      AppAssetConstants.img1,
+    ),
+  ];
   Offset cardOffset = Offset.zero;
   double scale = 1;
   Offset guideCardOffset = Offset.zero;
@@ -170,9 +206,9 @@ class _SwipeCardExampleState extends State<SwipeCardExample> {
       });
       Future.delayed(const Duration(milliseconds: 300), () {
         setState(() {
-          if ((guideCard.length == 3 && isSwipingRight) ||
-              (guideCard.length == 2 && !isSwipingRight)) {
-            guideCard.removeAt(0);
+          if ((guides.length == 3 && isSwipingRight) ||
+              (guides.length == 2 && !isSwipingRight)) {
+            guides.removeAt(0);
           }
           guideCardOffset = Offset.zero;
         });
@@ -187,8 +223,8 @@ class _SwipeCardExampleState extends State<SwipeCardExample> {
       // Reset the card position if the threshold isn't met
       Future.delayed(const Duration(milliseconds: 300), () {
         setState(() {
-          if (guideCard.length == 1) {
-            guideCard.removeAt(0);
+          if (guides.length == 1) {
+            guides.removeAt(0);
           }
           guideCardOffset = Offset.zero;
         });
@@ -230,7 +266,7 @@ class _SwipeCardExampleState extends State<SwipeCardExample> {
                         if (swipeProgress > 0) {
                           cardColor = Color.lerp(
                             Colors.transparent,
-                            Colors.green.withOpacity(0.5),
+                            Colors.green.withOpacity(0.7),
                             swipeProgress * 1.05,
                           )!;
                         } else {
@@ -279,26 +315,12 @@ class _SwipeCardExampleState extends State<SwipeCardExample> {
                           double baseScale = 1.0 - (index * 0.1);
                           double adjustedScale =
                               baseScale + ((scale - 1.0) / 2);
-                          return TweenAnimationBuilder<double>(
-                            tween: Tween<double>(
-                                begin: baseScale, end: adjustedScale),
-                            duration: const Duration(milliseconds: 400),
-                            builder: (context, animatedScale, child) {
-                              return Transform.translate(
-                                offset: offset,
-                                child: Transform.scale(
-                                  scale: animatedScale,
-                                  child: Transform.rotate(
-                                    angle: adjustedRotation,
-                                    child: child,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: SwippableCard(
-                              card: card,
-                              cardColor: null,
-                            ),
+                          return bottomCards(
+                            baseScale,
+                            adjustedScale,
+                            offset,
+                            adjustedRotation,
+                            card,
                           );
                         }
                         return Transform.scale(
@@ -313,62 +335,72 @@ class _SwipeCardExampleState extends State<SwipeCardExample> {
                       .reversed
                       .toList(),
                 ),
-                if (guideCard.isNotEmpty) ...[
-                  Positioned.fill(
-                      child: Container(
-                    height: double.infinity,
-                    width: double.infinity,
-                    color: Colors.black.withOpacity(0.5),
-                  )),
-                  Positioned.fill(
-                    child: GestureDetector(
-                      onPanUpdate: handleGuideRightSwipe,
-                      onPanEnd: handleGuideSwipeEnd,
-                      child: TweenAnimationBuilder<Offset>(
-                        tween:
-                            Tween(begin: guideCardOffset, end: guideCardOffset),
-                        duration: const Duration(milliseconds: 300),
-                        builder: (context, tweenOffset, child) {
-                          return Transform.translate(
-                            offset: guideCardOffset,
-                            child: Transform.rotate(
-                              angle: guideCardOffset.dx / 225,
-                              child: Container(
-                                color: Colors.transparent,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    LottieBuilder.asset(
-                                      guideCard[0].asset,
-                                      height: 125,
-                                      width: 125,
-                                    ),
-                                    Text(
-                                      guideCard[0].title,
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  )
-                ]
+                if (guides.isNotEmpty) Positioned.fill(child: _guideCards())
               ],
             )
           : const Text(
-              "No cards left",
+              AppStringConstants.noCardLeft,
               style: TextStyle(fontSize: 24),
             ),
+    );
+  }
+
+  Widget _guideCards() {
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Container(
+              height: double.infinity,
+              width: double.infinity,
+              color: Colors.black.withOpacity(0.5)),
+        ),
+        Positioned.fill(
+          child: GestureDetector(
+            onPanUpdate: handleGuideRightSwipe,
+            onPanEnd: handleGuideSwipeEnd,
+            child: TweenAnimationBuilder<Offset>(
+              tween: Tween(begin: guideCardOffset, end: guideCardOffset),
+              duration: const Duration(milliseconds: 300),
+              builder: (context, tweenOffset, child) {
+                return Transform.translate(
+                  offset: guideCardOffset,
+                  child: Transform.rotate(
+                    angle: guideCardOffset.dx / 225,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: GuideCardItem(guides: guides[0]),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget bottomCards(double baseScale, double adjustedScale, Offset offset,
+      double adjustedRotation, CardModel card) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween<double>(begin: baseScale, end: adjustedScale),
+      duration: const Duration(milliseconds: 400),
+      builder: (context, animatedScale, child) {
+        return Transform.translate(
+          offset: offset,
+          child: Transform.scale(
+            scale: animatedScale,
+            child: Transform.rotate(
+              angle: adjustedRotation,
+              child: child,
+            ),
+          ),
+        );
+      },
+      child: SwippableCard(
+        card: card,
+        cardColor: null,
+      ),
     );
   }
 }

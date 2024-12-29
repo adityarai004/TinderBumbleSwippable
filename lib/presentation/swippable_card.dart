@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:klickrasgn/card_model.dart';
+import 'package:klickrasgn/data/card_model.dart';
 import 'package:lottie/lottie.dart';
 
 class SwippableCard extends StatelessWidget {
@@ -139,7 +139,7 @@ class SwippableCard extends StatelessWidget {
                 child: SizedBox(
                   height: 200,
                   width: 200,
-                  child: Lottie.asset("assets/like.json", repeat: true),
+                  child: Lottie.asset("assets/lottie/like.json", repeat: true),
                 ),
               )
             else if (swipeProgress != null && swipeProgress! < -0.1)
@@ -149,7 +149,7 @@ class SwippableCard extends StatelessWidget {
                 child: SizedBox(
                   height: 200,
                   width: 200,
-                  child: Lottie.asset("assets/cross.json", repeat: true),
+                  child: Lottie.asset("assets/lottie/cross.json", repeat: true),
                 ),
               ),
             Positioned.fill(
